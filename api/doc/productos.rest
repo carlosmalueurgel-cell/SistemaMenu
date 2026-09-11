@@ -1,0 +1,40 @@
+### consulta de producto
+GET http://api.sistemamenu/productos
+
+### consulta de producto por ID
+GET http://api.sistemamenu/productos/1
+
+
+### Modificar Productos
+PUT  http://api.sistemamenu/productos/1
+
+{
+    "codBarras":"750105521001",
+    "descripcion":"Arroz Integral 2kg",
+    "stock":85,
+    "precio_unitario":15,
+    "fecha_registro":"2026-06-12"
+}
+### Adicionar Productos
+POST  http://api.sistemamenu/productos
+
+{
+    "codBarras":"750105531021",
+    "descripcion":"azucar 3kg",
+    "stock":85,
+    "precio_unitario":15,
+    "fecha_registro":"2026-06-12"
+}
+
+### Adicionar Producto con errores de validacion
+POST  http://api.sistemamenu/productos
+
+{
+    "codBarras":"",
+    "descripcion":"",
+    "stock":-5,
+    "precio_unitario":"abc"
+}
+
+### Eliminar Productos
+DELETE http://api.sistemamenu/productos/34

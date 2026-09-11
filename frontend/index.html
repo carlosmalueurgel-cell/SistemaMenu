@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema menu</title>  
+    <base href="./">
+    <link href="./src/styles/output.css" rel="stylesheet">
+</head>
+<body class="bg-slate-100 text-slate-900">
+    <div class="min-h-screen lg:flex">
+        <aside class="bg-slate-950 text-white lg:fixed lg:inset-y-0 lg:left-0 lg:w-64">
+            <div class="flex h-16 items-center border-b border-white/10 px-6">
+                <span class="text-lg font-semibold">Sistema Menu</span>
+            </div>
+
+            <nav class="space-y-2 px-4 py-6" aria-label="Menu principal">
+                <a href="#" data-view="home" class="menu-link flex items-center rounded-md px-4 py-3 text-sm font-medium text-slate-200 transition hover:bg-white/10 hover:text-white">
+                    Inicio
+                </a>
+                <a href="#" data-view="users" class="menu-link flex items-center rounded-md px-4 py-3 text-sm font-medium text-slate-200 transition hover:bg-white/10 hover:text-white">
+                    Usuarios
+                </a>
+                <a href="#" data-view="clientes" class="menu-link flex items-center rounded-md px-4 py-3 text-sm font-medium text-slate-200 transition hover:bg-white/10 hover:text-white">
+                    Clientes
+                </a>
+                <a href="#" data-view="productos" class="menu-link flex items-center rounded-md px-4 py-3 text-sm font-medium text-slate-200 transition hover:bg-white/10 hover:text-white">
+                    Productos
+                </a>
+            </nav>
+        </aside>
+
+        <div class="flex min-h-screen flex-1 flex-col lg:pl-64">
+            <header class="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-slate-200 bg-white px-6 shadow-sm">
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Panel principal</p>
+                    <h1 class="text-xl font-semibold text-slate-950">Dashboard</h1>
+                </div>
+                <div class="hidden rounded-md bg-slate-100 px-3 py-2 text-sm font-medium text-slate-600 sm:block">
+                    Administracion
+                </div>
+            </header>
+
+            <main class="flex-1 p-4 sm:p-6 lg:p-8">
+                <section id="app" class="mx-auto max-w-6xl"></section>
+            </main>
+        </div>
+    </div>
+
+    <script type="module" src="./src/main.js"></script>
+</body>
+</html>

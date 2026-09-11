@@ -1,0 +1,28 @@
+### Listar empleados
+GET http://api.sistemamenu/empleados
+
+### Obtener empleado por id
+GET http://api.sistemamenu/empleados/1
+
+### Crear empleado
+POST http://api.sistemamenu/empleados
+Content-Type: application/json
+
+{
+  "ci": "12345678",
+  "nombre": "Maria",
+  "apellidos": "Gonzalez"
+}
+
+### Actualizar empleado
+PUT http://api.sistemamenu/empleados/1
+Content-Type: application/json
+
+{
+  "ci": "12345678",
+  "nombre": "Maria Jose",
+  "apellidos": "Gonzalez Perez"
+}
+
+### Eliminar empleado
+DELETE http://api.sistemamenu/empleados/1

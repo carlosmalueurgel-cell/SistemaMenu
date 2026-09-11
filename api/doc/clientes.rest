@@ -1,0 +1,32 @@
+### consulta de clientes
+GET http://api.sistemamenu/clientes
+
+### consultar cliente por ID
+GET http://api.sistemamenu/clientes/1
+
+### crear cliente
+POST http://api.sistemamenu/clientes
+Content-Type: application/json
+
+{
+  "ci": "1234567",
+  "nombre": "Juan",
+  "apellidos": "Pérez Gómez",
+  "direccion": "Calle Flores 123",
+  "telefono": "71234567"
+}
+
+### actualizar cliente
+PUT http://api.sistemamenu/clientes/1
+Content-Type: application/json
+
+{
+  "ci": "1234567",
+  "nombre": "Juan",
+  "apellidos": "Pérez Gómez",
+  "direccion": "Av. Principal 456",
+  "telefono": "71234567"
+}
+
+### eliminar cliente
+DELETE http://api.sistemamenu/clientes/2

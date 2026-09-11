@@ -1,0 +1,32 @@
+### Listar pedidos
+GET http://api.sistemamenu/pedidos
+
+### Obtener pedido por id
+GET http://api.sistemamenu/pedidos/1
+
+### Crear pedido
+POST http://api.sistemamenu/pedidos
+Content-Type: application/json
+
+{
+  "cod_cliente": 1,
+  "fecha_compra": "2026-09-04 10:30:00",
+  "cantidad": 2,
+  "cod_empleado": 1,
+  "creado_por": null
+}
+
+### Actualizar pedido
+PUT http://api.sistemamenu/pedidos/1
+Content-Type: application/json
+
+{
+  "cod_cliente": 1,
+  "fecha_compra": "2026-09-04 11:15:00",
+  "cantidad": 3,
+  "cod_empleado": 1,
+  "creado_por": null
+}
+
+### Eliminar pedido
+DELETE http://api.sistemamenu/pedidos/1

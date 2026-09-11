@@ -1,0 +1,35 @@
+@baseUrl = http://api.sistemamenu
+
+### Listar usuarios
+GET {{baseUrl}}/users
+
+### Consultar usuario por ID
+GET {{baseUrl}}/users/1
+
+### Crear usuario
+# Usa un username que no exista y un cod_empleado que exista en EMPLEADOS.
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "username": "usuario_prueba_001",
+  "password_hash": "clave123",
+  "estado": 1,
+  "cod_empleado": 2
+}
+
+### Actualizar usuario
+# Reemplaza 21 por el id devuelto al crear el usuario.
+PUT {{baseUrl}}/users/17
+Content-Type: application/json
+
+{
+  "username": "usuario_prueba_001",
+  "password_hash": "clave-nueva-123",
+  "estado": 1,
+  "cod_empleado": 1
+}
+
+### Eliminar usuario
+# Reemplaza 21 por el id devuelto al crear el usuario.
+DELETE {{baseUrl}}/users/63

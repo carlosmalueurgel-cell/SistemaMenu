@@ -1,0 +1,32 @@
+### Listar detalles de pedido
+GET http://api.sistemamenu/pedido-productos
+
+### Obtener detalle por id
+GET http://api.sistemamenu/pedido-productos/1
+
+### Crear detalle de pedido
+POST http://api.sistemamenu/pedido-productos
+Content-Type: application/json
+
+{
+  "cod_producto": 1,
+  "cod_pedido": 1,
+  "cantidad": 2,
+  "precio_unitario": 15.50,
+  "descuento": 1.00
+}
+
+### Actualizar detalle de pedido
+PUT http://api.sistemamenu/pedido-productos/1
+Content-Type: application/json
+
+{
+  "cod_producto": 1,
+  "cod_pedido": 1,
+  "cantidad": 3,
+  "precio_unitario": 15.50,
+  "descuento": 0
+}
+
+### Eliminar detalle de pedido
+DELETE http://api.sistemamenu/pedido-productos/1
