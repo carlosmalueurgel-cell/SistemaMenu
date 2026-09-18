@@ -1,14 +1,12 @@
-@baseUrl = http://api.sistemamenu
-
 ### Listar usuarios
-GET {{baseUrl}}/users
+GET http://api.sistemamenu/users
 
 ### Consultar usuario por ID
-GET {{baseUrl}}/users/1
+GET http://api.sistemamenu/users/1
 
 ### Crear usuario
 # Usa un username que no exista y un cod_empleado que exista en EMPLEADOS.
-POST {{baseUrl}}/users
+POST http://api.sistemamenu/users
 Content-Type: application/json
 
 {
@@ -20,7 +18,7 @@ Content-Type: application/json
 
 ### Actualizar usuario
 # Reemplaza 21 por el id devuelto al crear el usuario.
-PUT {{baseUrl}}/users/17
+PUT http://api.sistemamenu/users/17
 Content-Type: application/json
 
 {
@@ -32,4 +30,4 @@ Content-Type: application/json
 
 ### Eliminar usuario
 # Reemplaza 21 por el id devuelto al crear el usuario.
-DELETE {{baseUrl}}/users/63
+DELETE http://api.sistemamenu/users/63
