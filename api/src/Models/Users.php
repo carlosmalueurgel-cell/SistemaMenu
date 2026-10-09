@@ -4,14 +4,34 @@ require_once __DIR__ . '/../config/conexionDB.php';
 
 class Users
 {
+    private const CAMPOS_CON_EMPLEADO = '
+        u.id,
+        u.username,
+        u.estado,
+        u.cod_empleado,
+        e.nombre AS empleado_nombre,
+        e.apellidos AS empleado_apellidos
+    ';
+
     public static function all(): array
     {
-        return ConexionPDO::query('SELECT id, username, estado, cod_empleado FROM USUARIOS ORDER BY id');
+        return ConexionPDO::query(
+            'SELECT ' . self::CAMPOS_CON_EMPLEADO . '
+             FROM USUARIOS u
+             LEFT JOIN EMPLEADOS e ON e.id = u.cod_empleado
+             ORDER BY u.id'
+        );
     }
 
     public static function find(int $id): array
     {
-        return ConexionPDO::query('SELECT id, username, estado, cod_empleado FROM USUARIOS WHERE id = :id', [':id' => $id]);
+        return ConexionPDO::query(
+            'SELECT ' . self::CAMPOS_CON_EMPLEADO . '
+             FROM USUARIOS u
+             LEFT JOIN EMPLEADOS e ON e.id = u.cod_empleado
+             WHERE u.id = :id',
+            [':id' => $id]
+        );
     }
 
     public static function add(array $data)

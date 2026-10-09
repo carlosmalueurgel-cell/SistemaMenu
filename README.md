@@ -10,7 +10,7 @@ API PHP y panel web para administrar usuarios, clientes y productos.
 
 ## Configuración
 
-1. Copia `api/.env.example` como `api/.env` y completa las credenciales de tu base de datos. El archivo `.env` no se debe subir al repositorio.
+1. Crea `api/.env` (no se debe subir al repositorio) con `DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_PORT` y `DB_CHARSET`, y completa sus valores con las credenciales de tu base de datos.
 2. Selecciona esa base de datos e importa, en este orden, `api/data/DBmenu.sql` y `api/data/llenarDatosDBmenu.sql`.
 3. Ejecuta la API desde la raíz del proyecto:
 
@@ -24,11 +24,7 @@ API PHP y panel web para administrar usuarios, clientes y productos.
    npx serve frontend
    ```
 
-5. Antes de cargar el frontend, configura la URL local de la API en la consola del navegador y recarga la página:
-
-   ```javascript
-   window.SISTEMA_MENU_API_URL = 'http://localhost:8000/'
-   ```
+5. El frontend consulta `http://localhost:8000/` por defecto. Para otro host, declara `window.SISTEMA_MENU_API_URL` **antes** de cargar `src/main.js` en `frontend/index.html`.
 
 ## Rutas principales
 
