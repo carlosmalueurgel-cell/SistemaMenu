@@ -38,7 +38,12 @@ class Users
     {
         return ConexionPDO::execute(
             'INSERT INTO USUARIOS (username, password_hash, estado, cod_empleado) VALUES (:username, :password_hash, :estado, :cod_empleado)',
-            self::parametros($data),
+            [
+                ':username' => trim($data['username']),
+                ':password_hash' => $data['password_hash'],
+                ':estado' => (int) $data['estado'],
+                ':cod_empleado' => (int) $data['cod_empleado'],
+            ],
             true
         );
     }
@@ -68,6 +73,12 @@ class Users
 
     public static function update(int $id, array $data): bool
     {
+        if (($data['password'] ?? '') === '') {
+            return ConexionPDO::execute(
+                'UPDATE USUARIOS SET username = :username, estado = :estado, cod_empleado = :cod_empleado WHERE id = :id',
+                [':username' => trim($data['username']), ':estado' => (int) $data['estado'], ':cod_empleado' => (int) $data['cod_empleado'], ':id' => $id]
+            );
+        }
         return ConexionPDO::execute(
             'UPDATE USUARIOS SET username = :username, password_hash = :password_hash, estado = :estado, cod_empleado = :cod_empleado WHERE id = :id',
             self::parametros($data) + [':id' => $id],
@@ -80,7 +91,7 @@ class Users
         return ConexionPDO::execute('DELETE FROM USUARIOS WHERE id = :id', [':id' => $id], false);
     }
 
-    public static function validar(array $data): array
+    public static function validar(array $data, bool $actualizar = false): array
     {
         $errores = [];
         if (!isset($data['username']) || !is_string($data['username']) || trim($data['username']) === '') {
@@ -88,11 +99,9 @@ class Users
         } elseif (strlen(trim($data['username'])) > 50) {
             $errores[] = 'El campo username no puede superar 50 caracteres';
         }
-        if (!isset($data['password_hash']) || !is_string($data['password_hash']) || trim($data['password_hash']) === '') {
-            $errores[] = 'El campo password_hash es obligatorio';
-        } elseif (strlen($data['password_hash']) > 255) {
-            $errores[] = 'El campo password_hash no puede superar 255 caracteres';
-        }
+        if (!$actualizar && (!isset($data['password']) || !is_string($data['password']) || $data['password'] === '')) $errores[] = 'La contraseña es obligatoria';
+        if (isset($data['password']) && (!is_string($data['password']) || ($data['password'] !== '' && strlen($data['password']) < 8))) $errores[] = 'La contraseña debe tener al menos 8 caracteres';
+        if (isset($data['password']) && strlen($data['password']) > 4096) $errores[] = 'La contraseña es demasiado larga';
         if (!array_key_exists('estado', $data) || !in_array($data['estado'], [0, 1, true, false, '0', '1'], true)) {
             $errores[] = 'El campo estado debe ser 0 o 1';
         }
@@ -106,7 +115,7 @@ class Users
     {
         return [
             ':username' => trim($data['username']),
-            ':password_hash' => $data['password_hash'],
+            ':password_hash' => password_hash($data['password'], PASSWORD_DEFAULT),
             ':estado' => (int) $data['estado'],
             ':cod_empleado' => (int) $data['cod_empleado'],
         ];

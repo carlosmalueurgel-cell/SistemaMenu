@@ -1,34 +1,16 @@
-import { api } from '../utils/api.js';
+import { mountCrudList } from './crudList.js';
 
-const escaparHtml = (valor) => String(valor ?? '').replace(/[&<>"']/g, caracter => ({
-    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
-}[caracter]));
-
-const empleadoTexto = (user) => {
-    const nombre = [user.empleado_nombre, user.empleado_apellidos].filter(Boolean).join(' ');
-    return nombre ? `${user.cod_empleado} - ${nombre}` : (user.cod_empleado ?? 'Sin empleado relacionado');
-};
-
-export const getUserList = async () => {
-    const container = document.getElementById('userTableList');
-    container.innerHTML = '<tr><td class="px-6 py-4 text-slate-500" colspan="4">Cargando...</td></tr>';
-    try {
-
-        const users = await api.get('users');
-        if (users.length === 0) {
-            container.innerHTML = '<tr><td class="px-6 py-4 text-slate-500" colspan="4">No hay usuarios registrados.</td></tr>';
-            return;
-        }
-        container.innerHTML = users.map(user => `
-            <tr>
-                <td class="px-6 py-4">${escaparHtml(user.id)}</td>
-                <td class="px-6 py-4">${escaparHtml(user.username)}</td>
-                <td class="px-6 py-4">${Number(user.estado) === 1 ? 'Activo' : 'Inactivo'}</td>
-                <td class="px-6 py-4">${escaparHtml(empleadoTexto(user))}</td>
-            </tr>
-        `).join('');
-    } catch (error) {
-        console.error('Error al cargar usuarios:', error);
-        container.innerHTML = `<tr><td class="px-6 py-4 text-red-600" colspan="4">No se pudieron cargar los usuarios: ${escaparHtml(error.message)}</td></tr>`;
-    }
-};
+export const getUserList = () => mountCrudList({
+    rootId: 'userTableList', endpoint: 'users', title: 'Usuarios',
+    columns: [
+        { key: 'id' }, { key: 'username' },
+        { key: 'estado', value: row => Number(row.estado) === 1 ? 'Activo' : 'Inactivo' },
+        { key: 'cod_empleado', value: row => `${row.cod_empleado} - ${[row.empleado_nombre, row.empleado_apellidos].filter(Boolean).join(' ')}` },
+    ],
+    fields: [
+        { name: 'username', label: 'Nombre de usuario', required: true, maxLength: 50 },
+        { name: 'password', label: 'Contraseña', type: 'password', required: true, optionalOnEdit: true },
+        { name: 'cod_empleado', label: 'ID del empleado', type: 'number', min: 1, step: 1, required: true },
+        { name: 'estado', label: 'Estado', type: 'select', required: true, default: '1', options: [{ value: '1', label: 'Activo' }, { value: '0', label: 'Inactivo' }] },
+    ],
+});

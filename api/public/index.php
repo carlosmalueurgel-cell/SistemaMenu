@@ -1,10 +1,6 @@
 <?php
 
 header('Content-Type: application/json; charset=utf-8');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { http_response_code(204); exit; }
 
 require_once __DIR__ . '/../src/Router.php';
 require_once __DIR__ . '/../src/Controllers/UserController.php';
@@ -14,6 +10,15 @@ require_once __DIR__ . '/../src/Controllers/EmpleadosController.php';
 require_once __DIR__ . '/../src/Controllers/PedidosController.php';
 require_once __DIR__ . '/../src/Controllers/PedidoProductosController.php';
 
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+if ($origin !== '' && hash_equals(FRONTEND_ORIGIN, $origin)) {
+    header('Access-Control-Allow-Origin: ' . FRONTEND_ORIGIN);
+    header('Vary: Origin');
+    header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+    header('Access-Control-Allow-Headers: Content-Type');
+}
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { http_response_code(204); exit; }
+
 use App\Router;
 
 $route=new Router();
@@ -22,6 +27,7 @@ $route->add('GET','/','UserController@getAll');
 $route->add('GET','/users','UserController@getAll');
 $route->add('GET','/users/{id}','UserController@getById');
 $route->add('POST','/users','UserController@add');
+$route->add('POST','/login','UserController@login');
 $route->add('PUT','/users/{id}','UserController@actualizar');
 $route->add('DELETE','/users/{id}','UserController@eliminar');
 //direccion de producto

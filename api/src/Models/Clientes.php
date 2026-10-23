@@ -23,6 +23,14 @@ class Clientes
         );
     }
 
+    public static function ciExiste(string $ci, ?int $excluir = null): bool
+    {
+        $sql = 'SELECT id FROM CLIENTES WHERE ci = :ci';
+        $parametros = [':ci' => trim($ci)];
+        if ($excluir !== null) { $sql .= ' AND id != :id'; $parametros[':id'] = $excluir; }
+        return ConexionPDO::query($sql . ' LIMIT 1', $parametros) !== [];
+    }
+
     public static function update(int $id, array $data): bool
     {
         return ConexionPDO::execute(

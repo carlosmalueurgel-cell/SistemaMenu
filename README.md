@@ -10,8 +10,10 @@ API PHP y panel web para administrar usuarios, clientes y productos.
 
 ## Configuración
 
-1. Crea `api/.env` (no se debe subir al repositorio) con `DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_PORT` y `DB_CHARSET`, y completa sus valores con las credenciales de tu base de datos.
+1. Crea `api/.env` (no se debe subir al repositorio) con `DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_PORT` y `DB_CHARSET`, y completa sus valores con las credenciales de tu base de datos. `FRONTEND_ORIGIN` es opcional y por defecto vale `http://localhost:3000`; configúralo con el origen exacto del frontend si usas otro puerto o dominio.
 2. Selecciona esa base de datos e importa, en este orden, `api/data/DBmenu.sql` y `api/data/llenarDatosDBmenu.sql`.
+   El script de datos es para una base vacía y no debe importarse repetidamente. Los registros de usuario del ejemplo contienen contraseñas de demostración sin hash: no uses esos datos en producción.
+   Para una base existente, revisa los duplicados indicados al inicio de `api/data/migrations/001_unique_customer_and_product_codes.sql` y ejecuta esa migración una sola vez si no hay duplicados.
 3. Ejecuta la API desde la raíz del proyecto:
 
    ```powershell
@@ -24,7 +26,9 @@ API PHP y panel web para administrar usuarios, clientes y productos.
    npx serve frontend
    ```
 
-5. El frontend consulta `http://localhost:8000/` por defecto. Para otro host, declara `window.SISTEMA_MENU_API_URL` **antes** de cargar `src/main.js` en `frontend/index.html`.
+   Para regenerar los estilos, instala las dependencias en `frontend/` con `npm ci` y ejecuta allí `npm run dev`.
+
+5. El frontend consulta `http://api.sistemamenu/` por defecto. Si inicias la API con el servidor PHP del paso 3, declara `window.SISTEMA_MENU_API_URL = 'http://localhost:8000/'` **antes** de cargar `src/main.js` en `frontend/index.html`. La API solo permite por CORS el origen exacto indicado en `FRONTEND_ORIGIN`; si no se define, permite `http://localhost:3000`.
 
 ## Rutas principales
 

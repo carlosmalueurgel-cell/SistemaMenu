@@ -11,7 +11,7 @@ Content-Type: application/json
 
 {
   "username": "usuario_prueba_001",
-  "password_hash": "clave123",
+  "password": "clave-segura-123",
   "estado": 1,
   "cod_empleado": 2
 }
@@ -23,7 +23,7 @@ Content-Type: application/json
 
 {
   "username": "usuario_prueba_001",
-  "password_hash": "clave-nueva-123",
+  "password": "clave-nueva-segura-123",
   "estado": 1,
   "cod_empleado": 1
 }

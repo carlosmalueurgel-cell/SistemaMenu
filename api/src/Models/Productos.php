@@ -19,6 +19,14 @@ class Productos
         return ConexionPDO::execute('INSERT INTO PRODUCTOS (codBarras, descripcion, stock, precio_unitario, creado_por) VALUES (:codBarras, :descripcion, :stock, :precio_unitario, :creado_por)', self::parametros($data), true);
     }
 
+    public static function codigoExiste(string $codigo, ?int $excluir = null): bool
+    {
+        $sql = 'SELECT id FROM PRODUCTOS WHERE codBarras = :codigo';
+        $parametros = [':codigo' => trim($codigo)];
+        if ($excluir !== null) { $sql .= ' AND id != :id'; $parametros[':id'] = $excluir; }
+        return ConexionPDO::query($sql . ' LIMIT 1', $parametros) !== [];
+    }
+
     public static function update(int $id, array $data): bool
     {
         return ConexionPDO::execute('UPDATE PRODUCTOS SET codBarras = :codBarras, descripcion = :descripcion, stock = :stock, precio_unitario = :precio_unitario, creado_por = :creado_por WHERE id = :id', self::parametros($data) + [':id' => $id], false);

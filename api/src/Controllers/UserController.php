@@ -30,6 +30,8 @@ class UserController
         if ($data === null) return;
         $errores = Users::validar($data);
         if ($errores !== []) { $this->respuesta(400, ['estado' => false, 'errores' => $errores]); return; }
+        $data['password_hash'] = password_hash($data['password'], PASSWORD_DEFAULT);
+        unset($data['password']);
         try {
             if (Users::usernameExiste($data['username'])) {
                 $this->respuesta(409, ['estado' => false, 'mensaje' => 'El username ya está registrado']);
@@ -50,7 +52,7 @@ class UserController
     {
         $data = $this->datosJson();
         if ($data === null) return;
-        $errores = Users::validar($data);
+        $errores = Users::validar($data, true);
         if ($errores !== []) { $this->respuesta(400, ['estado' => false, 'errores' => $errores]); return; }
         try {
             if (Users::find($id) === []) { $this->respuesta(404, ['estado' => false, 'mensaje' => 'Usuario no encontrado']); return; }
@@ -89,7 +91,7 @@ class UserController
     {
         http_response_code($estado);
         header('Content-Type: application/json; charset=utf-8');
-        echo json_encode($datos);
+        echo json_encode($datos, JSON_INVALID_UTF8_SUBSTITUTE);
     }
 
     private function respuestaErrorBaseDatos(Throwable $error, string $accion): void

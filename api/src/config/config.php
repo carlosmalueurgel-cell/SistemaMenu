@@ -12,6 +12,7 @@ define('USERNAME', $config['DB_USER']);
 define('PASSWORD', $config['DB_PASSWORD']);
 define('PORT', $config['DB_PORT']);
 define('CHARSET', str_replace('charset=', '', $config['DB_CHARSET']));
+define('FRONTEND_ORIGIN', $config['FRONTEND_ORIGIN'] ?? 'http://localhost:3000');
 
 
 	
